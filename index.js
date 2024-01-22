@@ -3,13 +3,14 @@ const express = require('express')
 const { extraerInfo } = require('./src/ejercicios/extraerInfo/extraerInfo')
 const { normalizar } = require('./src/ejercicios/normalizador/normalizacion')
 const { distanciaAlObelisco } = require('./src/ejercicios/distancia/distancia')
+const { getMoneda } = require('./src/ejercicios/moneda/moneda')
 
 const app = express()
 app.disable('x-powered-by')
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.json('A continuación, los ejercicios 1, 2 y 3, que consumen dos apis distintas y exponen su información en distintos formatos')
+    res.json('A continuación, los ejercicios 1, 2 y 4, que consumen dos apis distintas y exponen su información en distintos formatos')
 })
 
 app.get('/info', async (req, res) => {
@@ -51,6 +52,12 @@ app.get('/distancia', async (req, res) => {
     res.json(resultado)
 })
 //////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/moneda', async (req, res) => {
+    const { pais } = req.query
+    const resultado = await getMoneda(pais)
+    
+    res.json(resultado)
+})
 
 const PORT = process.env.PORT ?? 3000
 
